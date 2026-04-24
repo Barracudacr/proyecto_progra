@@ -1,0 +1,22 @@
+[
+    {
+        "id": "6c8a076a",
+        "name": "Mi Tienda S.A.",
+        "cedula_juridica": "3-234-456789",
+        "address": "San Jose, Costa Rica",
+        "phone": "2222-3333",
+        "email": "info@mitienda.cr",
+        "created_at": "2026-04-17T08:16:28.448344",
+        "active": true
+    },
+    {
+        "id": "e5ce448b",
+        "name": "andres",
+        "cedula_juridica": "1 234567 890",
+        "address": "100 metros sur",
+        "phone": "7276 7781",
+        "email": "andres.corrales512@gmail.com",
+        "created_at": "2026-04-23T14:55:52.004882",
+        "active": true
+    }
+]

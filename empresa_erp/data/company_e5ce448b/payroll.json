@@ -1,0 +1,86 @@
+[
+    {
+        "id": "f4142d23-afc",
+        "employee_id": "374686d1-030",
+        "period": "mensual",
+        "details": {
+            "employee_id": "374686d1-030",
+            "employee_name": "jaime juarez",
+            "period": "mensual",
+            "base_salary": 2000000.0,
+            "bonuses": 0,
+            "commissions": 0,
+            "overtime_hours": 0,
+            "overtime_pay": 0.0,
+            "gross_salary": 2000000.0,
+            "deductions": {
+                "isr": 200000.0,
+                "seguro_social": 80000.0,
+                "seguro_educativo": 40000.0,
+                "paro_paro": 20000.0,
+                "total": 340000.0
+            },
+            "net_salary": 1660000.0,
+            "calculated_at": "2026-04-23T14:58:09.195299"
+        },
+        "status": "calculado",
+        "created_at": "2026-04-23T14:58:09.195299",
+        "updated_at": "2026-04-23T14:58:09.195299"
+    },
+    {
+        "id": "bfd63db1-9c1",
+        "employee_id": "374686d1-030",
+        "period": "mensual",
+        "details": {
+            "employee_id": "374686d1-030",
+            "employee_name": "jaime juarez",
+            "period": "mensual",
+            "base_salary": 2000000.0,
+            "bonuses": 0,
+            "commissions": 0,
+            "overtime_hours": 0,
+            "overtime_pay": 0.0,
+            "gross_salary": 2000000.0,
+            "deductions": {
+                "isr": 200000.0,
+                "seguro_social": 80000.0,
+                "seguro_educativo": 40000.0,
+                "paro_paro": 20000.0,
+                "total": 340000.0
+            },
+            "net_salary": 1660000.0,
+            "calculated_at": "2026-04-23T15:01:13.153953"
+        },
+        "status": "calculado",
+        "created_at": "2026-04-23T15:01:13.153953",
+        "updated_at": "2026-04-23T15:01:13.153953"
+    },
+    {
+        "id": "7c3480c6-22a",
+        "employee_id": "374686d1-030",
+        "period": "mensual",
+        "details": {
+            "employee_id": "374686d1-030",
+            "employee_name": "jaime juarez",
+            "period": "mensual",
+            "base_salary": 2000000.0,
+            "bonuses": 0,
+            "commissions": 0,
+            "overtime_hours": 0,
+            "overtime_pay": 0.0,
+            "gross_salary": 2000000.0,
+            "deductions": {
+                "isr": 200000.0,
+                "seguro_social": 80000.0,
+                "seguro_educativo": 40000.0,
+                "paro_paro": 20000.0,
+                "total": 340000.0
+            },
+            "net_salary": 1660000.0,
+            "calculated_at": "2026-04-23T15:49:22.546688"
+        },
+        "status": "calculado",
+        "created_at": "2026-04-23T15:49:22.546688",
+        "updated_at": "2026-04-23T15:49:22.546688"
+    }
+]

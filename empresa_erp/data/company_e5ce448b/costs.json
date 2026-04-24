@@ -1,0 +1,13 @@
+[
+    {
+        "id": "17a5d8cb-b23",
+        "product_id": "03f25f75-0fa",
+        "product_name": "telefono",
+        "type": "reposicion",
+        "quantity": 600,
+        "unit_cost": 150000.0,
+        "total_cost": 90000000.0,
+        "created_at": "2026-04-23T15:50:06.441969",
+        "updated_at": "2026-04-23T15:50:06.441969"
+    }
+]

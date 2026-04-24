@@ -1,0 +1,51 @@
+# EnterpriseERP - Requirements
+# Dependencias opcionales para funcionalidades extendidas
+
+# Bibliotecas estándar de Python (incluidas por defecto)
+# - json (integrado)
+# - csv (integrado)
+# - datetime (integrado)
+# - hashlib (integrado)
+# - uuid (integrado)
+# - tkinter (integrado con Python)
+# - smtplib (integrado)
+# - ssl (integrado)
+# - pathlib (integrado)
+
+# ============================================
+# DEPENDENCIAS OPCIONALES (instalar si se desea)
+# ============================================
+
+# ReportLab - Para generación de facturas PDF profesionales
+# pip install reportlab
+# Website: https://www.reportlab.com/
+
+# Matplotlib - Para gráficos y dashboards visuales
+# pip install matplotlib
+# Website: https://matplotlib.org/
+
+# NumPy - Para cálculos numéricos avanzados
+# pip install numpy
+# Website: https://numpy.org/
+
+# Pandas - Para análisis de datos y manipulación
+# pip install pandas
+# Website: https://pandas.pydata.org/
+
+# ============================================
+# INSTALACIÓN RÁPIDA
+# ============================================
+# pip install reportlab matplotlib numpy pandas
+
+# ============================================
+# NOTA IMPORTANTE
+# ============================================
+# El sistema funciona 100% con Python estándar.
+# Las dependencias listadas arriba son OPCIONALES
+# y solo mejoran ciertas funcionalidades:
+#
+# - Sin reportlab: Las facturas se generan en texto plano
+# - Sin matplotlib: Los gráficos no estarán disponibles
+# - Sin numpy/pandas: Los reportes estadísticos serán básicos
+#
+# La experiencia base siempre estará disponible.

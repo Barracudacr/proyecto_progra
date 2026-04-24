@@ -1,0 +1,608 @@
+================================================================================
+                     DOCUMENTACION TECNICA - EnterpriseERP
+                     Sistema de Gestion Empresarial Integral
+================================================================================
+
+Version: 1.0.0
+Fecha: 2026
+Tecnologia: Python 100% Puro
+
+================================================================================
+                              INDICE
+================================================================================
+
+1. Introduccion
+2. Arquitectura del Sistema
+3. Estructura del Proyecto
+4. Modulos del Sistema
+5. Base de Datos
+6. Autenticacion y Control de Acceso
+7. API Reference
+8. Instalacion
+9. Configuracion
+
+================================================================================
+                         1. INTRODUCCION
+================================================================================
+
+1.1 Proposito del Sistema
+--------------------------
+EnterpriseERP es un sistema de planificacion de recursos empresariales (ERP)
+desarrollado integralmente en Python, diseñado para centralizar y optimizar
+la gestion de empresas de cualquier tamano.
+
+
+1.2 Caracteristicas Principales
+-------------------------------
+- 100% Python: Sin dependencias externas para el nucleo del sistema
+- Multitenancy: Soporte para multiples empresas en una sola instalacion
+- Interfaz Grafica: Aplicacion de escritorio con Tkinter
+- Sistema de Roles: Control de acceso granular basado en roles (RBAC)
+- Reportes Visuales: Generacion de graficos y dashboards
+- Facturacion: Generacion de facturas en PDF
+- Notificaciones: Sistema de alertas por correo electronico
+
+
+1.3 Requisitos del Sistema
+-------------------------
+- Python 3.8 o superior
+- Sistema operativo: Windows, macOS, Linux
+- RAM minima: 4 GB
+- Espacio en disco: 100 MB
+
+================================================================================
+                    2. ARQUITECTURA DEL SISTEMA
+================================================================================
+
+2.1 Patrones de Diseno
+----------------------
+El sistema utiliza una arquitectura monolítica modular con las siguientes
+características:
+
+CAPA DE PRESENTACION
+    (Interfaz Grafica GUI)
+
+CAPA DE SERVICIOS
+    [RRHH] [Inventario] [Finanzas] [Reportes] [Automatizacion]
+
+CAPA DE DATOS
+    (JSON Database Layer)
+
+SISTEMA DE ARCHIVOS
+    (Almacenamiento JSON/CSV)
+
+
+2.2 Componentes Principales
+--------------------------
+| Componente     | Descripcion                  | Responsabilidad           |
+|----------------|------------------------------|---------------------------|
+| database.py    | Capa de datos                | Persistencia y CRUD       |
+| auth.py        | Autenticacion                | Login, logout, sesiones    |
+| hr.py          | Recursos Humanos             | Empleados, nomina, asist. |
+| inventory.py   | Inventario                   | Productos, stock, cats.   |
+| finance.py     | Finanzas                     | Ventas, compras, reportes |
+| reports.py     | Reportes                    | Graficos y dashboards    |
+| automation.py  | Automatizacion              | Correos y notificaciones  |
+| gui.py         | Interfaz                    | Aplicacion Tkinter        |
+
+================================================================================
+                    3. ESTRUCTURA DEL PROYECTO
+================================================================================
+
+empresa_erp/
+|
++-- main.py                    # Punto de entrada
++-- src/
+|   +-- __init__.py           # Paquete principal
+|   +-- database.py           # Sistema de base de datos
+|   +-- gui.py                # Interfaz grafica
+|   +-- modules/
+|       +-- __init__.py       # Módulos del sistema
+|       +-- auth.py           # Autenticacion
+|       +-- hr.py             # Recursos Humanos
+|       +-- inventory.py      # Inventario
+|       +-- finance.py        # Finanzas
+|       +-- reports.py        # Reportes
+|       +-- automation.py     # Automatizacion
++-- data/                      # Datos de la aplicacion
++-- docs/                     # Documentacion
++-- brand/                    # Identidad corporativa
+
+================================================================================
+                    4. MODULOS DEL SISTEMA
+================================================================================
+
+4.1 Modulo de Base de Datos (database.py)
+-----------------------------------------
+
+Clase: Database
+Sistema de persistencia basado en archivos JSON con soporte para multitenancy.
+
+Metodos Principales:
+
+    create_company(name, rif, address, phone, email) -> Dict
+        Registra una nueva empresa en el sistema.
+
+    get_companies() -> List[Dict]
+        Retorna todas las empresas registradas.
+
+    init_company(company_id: str)
+        Inicializa el contexto para una empresa.
+
+    select_company(company_id: str)
+        Selecciona la empresa activa para operaciones.
+
+    CRUD(collection, operation, data, filters, record_id) -> any
+        Sistema CRUD generico para todas las colecciones.
+
+    backup_company(company_id) -> str
+        Crea una copia de seguridad.
+
+    restore_company(backup_file) -> str
+        Restaura datos desde un backup.
+
+    export_csv(collection) -> str
+        Exporta una coleccion a formato CSV.
+
+    import_csv(collection, csv_file) -> int
+        Importa datos desde un archivo CSV.
+
+
+Colecciones Disponibles:
+------------------------
+| Coleccion         | Descripcion                |
+|-------------------|----------------------------|
+| users             | Usuarios del sistema       |
+| employees         | Datos de empleados         |
+| attendance         | Registros de asistencia    |
+| payroll           | Nominas calculadas         |
+| products          | Catalogo de productos      |
+| categories        | Categorias de productos    |
+| suppliers         | Proveedores               |
+| sales             | Registro de ventas        |
+| purchases         | Registro de compras        |
+| invoices          | Facturas generadas         |
+
+
+4.2 Modulo de Autenticacion (auth.py)
+--------------------------------------
+
+Clase: AuthSystem
+Sistema de control de acceso basado en roles (RBAC).
+
+Roles Disponibles:
+------------------
+| Rol      | Nivel | Permisos                            |
+|----------|-------|-------------------------------------|
+| admin    | 3     | Acceso total al sistema             |
+| gerente  | 2     | Ventas, compras, inventario, reportes|
+| empleado | 1     | Solo nomina propia y asistencia      |
+
+
+4.3 Modulo de Recursos Humanos (hr.py)
+---------------------------------------
+
+Clases:
+    - EmployeeManager: Gestion de empleados
+    - PayrollManager: Calculo de nominas
+    - AttendanceManager: Control de asistencia
+
+
+Empleados:
+
+    employees.create_employee(data) -> Dict
+        Crea un nuevo registro de empleado.
+
+    employees.list_employees(filters) -> List[Dict]
+        Lista empleados con filtros.
+
+    employees.get_employee(employee_id) -> Optional[Dict]
+        Obtiene datos de un empleado especifico.
+
+    employees.update_employee(employee_id, updates) -> Dict
+        Actualiza datos de un empleado.
+
+    employees.search_employees(query) -> List[Dict]
+        Busca empleados por nombre o documento.
+
+
+Nomina:
+
+    payroll.calculate_net_salary(employee_id, period, bonuses, commissions)
+        Calcula el salario neto completo.
+
+    payroll.generate_payroll(period, department) -> List[Dict]
+        Genera la nomina completa para un periodo.
+
+    payroll.get_payroll_history(employee_id) -> List[Dict]
+        Obtiene historial de nominas.
+
+
+Asistencia:
+
+    attendance.check_in(employee_id) -> Dict
+        Registra entrada de un empleado.
+
+    attendance.check_out(employee_id) -> Dict
+        Registra salida de un empleado.
+
+    attendance.request_vacation(employee_id, data) -> Dict
+        Registra solicitud de vacaciones.
+
+    attendance.get_attendance_report(start_date, end_date) -> List[Dict]
+        Genera reporte de asistencia.
+
+
+4.4 Modulo de Inventario (inventory.py)
+----------------------------------------
+
+Clases:
+    - CategoryManager: Categorias de productos
+    - SupplierManager: Gestion de proveedores
+    - ProductManager: Control de inventario
+
+
+Categorias:
+
+    categories.create_category(data) -> Dict
+        Crea una nueva categoria.
+
+    categories.list_categories(parent_id) -> List[Dict]
+        Lista categorias.
+
+    categories.update_category(category_id, updates) -> Dict
+        Actualiza una categoria.
+
+
+Proveedores:
+
+    suppliers.create_supplier(data) -> Dict
+        Registra un nuevo proveedor.
+
+    suppliers.list_suppliers(filters) -> List[Dict]
+        Lista proveedores.
+
+    suppliers.update_supplier(supplier_id, updates) -> Dict
+        Actualiza datos de un proveedor.
+
+
+Productos:
+
+    products.create_product(data) -> Dict
+        Crea un nuevo producto.
+
+    products.list_products(filters) -> List[Dict]
+        Lista productos.
+
+    products.get_product(product_id) -> Optional[Dict]
+        Obtiene un producto por ID o SKU.
+
+    products.stock_entry(product_id, quantity, notes, reference) -> Dict
+        Registra entrada de mercancía.
+
+    products.stock_output(product_id, quantity, notes, reference) -> Dict
+        Registra salida de mercancía.
+
+    products.get_low_stock_products() -> List[Dict]
+        Retorna productos con stock bajo.
+
+    products.get_inventory_valuation() -> Dict
+        Calcula el valor total del inventario.
+
+
+4.5 Modulo de Finanzas (finance.py)
+-------------------------------------
+
+Clases:
+    - SalesManager: Gestion de ventas
+    - PurchasesManager: Gestion de compras
+    - InvoiceGenerator: Generacion de facturas
+    - FinanceReports: Reportes financieros
+
+
+Ventas:
+
+    sales.create_sale(data) -> Dict
+        Registra una nueva venta.
+
+    sales.list_sales(filters) -> List[Dict]
+        Lista ventas.
+
+    sales.get_sale(sale_id) -> Optional[Dict]
+        Obtiene detalles de una venta.
+
+    sales.cancel_sale(sale_id, reason) -> Dict
+        Cancela una venta y revierte el inventario.
+
+
+Compras:
+
+    purchases.create_purchase(data) -> Dict
+        Registra una nueva compra.
+
+    purchases.list_purchases(filters) -> List[Dict]
+        Lista compras.
+
+    purchases.mark_as_paid(purchase_id, payment_data) -> Dict
+        Marca una compra como pagada.
+
+
+Facturas:
+
+    invoices.generate_invoice(sale_id, output_path) -> str
+        Genera una factura PDF para una venta.
+
+
+Reportes Financieros:
+
+    reports.get_cash_flow(start_date, end_date) -> Dict
+        Calcula el flujo de caja.
+
+    reports.get_income_statement(start_date, end_date) -> Dict
+        Genera estado de perdidas y ganancias.
+
+    reports.get_balance_sheet() -> Dict
+        Genera balance general simplificado.
+
+    reports.get_sales_summary(start_date, end_date) -> Dict
+        Resumen de ventas.
+
+
+4.6 Modulo de Reportes (reports.py)
+------------------------------------
+
+Clase: ReportGenerator
+Generacion de graficos y dashboards visuales.
+
+    reports.plot_sales_overview(start_date, end_date) -> str
+        Genera grafico de overview de ventas.
+
+    reports.plot_inventory_status() -> str
+        Genera grafico del estado del inventario.
+
+    reports.plot_employee_stats() -> str
+        Genera grafico de estadisticas de empleados.
+
+    reports.plot_profit_loss(start_date, end_date) -> str
+        Genera grafico de perdidas y ganancias.
+
+    reports.generate_executive_dashboard() -> Dict
+        Genera un dashboard ejecutivo completo.
+
+    reports.export_report_json(report_type, **kwargs) -> str
+        Exporta un reporte a JSON.
+
+
+4.7 Modulo de Automatizacion (automation.py)
+----------------------------------------------
+
+Clases:
+    - EmailConfig: Configuracion SMTP
+    - EmailSender: Envio de correos
+    - NotificationSystem: Sistema de notificaciones
+
+
+Configuracion de Correo:
+
+    email_config.configure(smtp_server, smtp_port, sender_email, sender_password)
+        Configura los parametros del servidor SMTP.
+
+    email_config.save_config(filepath)
+        Guarda la configuracion en un archivo JSON.
+
+    email_config.load_config(filepath)
+        Carga la configuracion desde un archivo JSON.
+
+
+Envio de Correos:
+
+    email_sender.send_email(to_email, subject, body, html_body, attachments) -> bool
+        Envia un correo electronico.
+
+    email_sender.send_mass_email(recipients, subject, body_template) -> Dict
+        Envia correos masivos.
+
+
+Notificaciones:
+
+    notifications.check_and_notify_low_stock() -> Dict
+        Verifica productos con stock bajo y envia notificaciones.
+
+    notifications.notify_payroll_day() -> Dict
+        Envía notificacion recordatorio de dia de pago.
+
+    notifications.send_daily_summary(company_id) -> Dict
+        Envia resumen diario de la empresa.
+
+    notifications.send_weekly_report(company_id) -> Dict
+        Envia reporte semanal completo.
+
+================================================================================
+                         5. BASE DE DATOS
+================================================================================
+
+5.1 Modelo de Datos
+-------------------
+
+Empresas:
+{
+  "id": "abc12345",
+  "name": "Empresa Demo C.A.",
+  "rif": "J-12345678-9",
+  "address": "Direccion de la empresa",
+  "phone": "+58 212 123-4567",
+  "email": "info@empresa.com",
+  "created_at": "2026-04-17T10:00:00",
+  "active": true
+}
+
+Usuarios:
+{
+  "id": "user001",
+  "username": "admin",
+  "password_hash": "sha256_hash",
+  "role": "admin",
+  "employee_id": "emp001",
+  "full_name": "Administrador",
+  "email": "admin@empresa.com",
+  "created_at": "2026-04-17T10:00:00",
+  "last_login": null,
+  "active": true
+}
+
+Empleados:
+{
+  "id": "emp001",
+  "first_name": "Juan",
+  "last_name": "Perez",
+  "document_type": "DNI",
+  "document_number": "V-12345678",
+  "email": "juan@empresa.com",
+  "department": "Ventas",
+  "position": "Vendedor",
+  "hire_date": "2026-01-15",
+  "salary": 800.00,
+  "status": "activo"
+}
+
+Productos:
+{
+  "id": "prod001",
+  "sku": "LAP001",
+  "name": "Laptop HP 15\"",
+  "category_id": "cat001",
+  "cost": 450.00,
+  "price": 650.00,
+  "stock": 15,
+  "min_stock": 5,
+  "status": "activo"
+}
+
+================================================================================
+                6. AUTENTICACION Y CONTROL DE ACCESO
+================================================================================
+
+6.1 Sistema RBAC
+----------------
+El sistema implementa Control de Acceso Basado en Roles.
+
+Jerarquia de Roles:
+    ADMIN (Nivel 3) - Acceso total
+         |
+    GERENTE (Nivel 2) - Lectura/Escritura operativa
+         |
+    EMPLEADO (Nivel 1) - Solo datos propios
+
+
+6.2 Permisos por Rol
+--------------------
+| Recurso      | Admin | Gerente | Empleado |
+|--------------|-------|--------|----------|
+| Usuarios     | CRUD  | -      | -        |
+| Empleados    | CRUD  | CRUD   | R (propio)|
+| Nomina       | CRUD  | R      | R (propia)|
+| Asistencia   | CRUD  | CRUD   | RU (propia)|
+| Inventario   | CRUD  | CRUD   | R        |
+| Ventas       | CRUD  | CRUD   | -        |
+| Compras      | CRUD  | CRUD   | -        |
+| Reportes     | CRUD  | R      | R (limit.)|
+
+================================================================================
+                         7. API REFERENCE
+================================================================================
+
+7.1 Metodos CRUD Comunes
+------------------------
+
+Crear registro:
+    db.CRUD('collection', 'create', data={'key': 'value'})
+
+Leer registros:
+    db.CRUD('collection', 'list', filters={'status': 'activo'})
+
+Leer un registro:
+    db.CRUD('collection', 'find', record_id='id123')
+
+Actualizar registro:
+    db.CRUD('collection', 'update', data={'key': 'new_value'}, record_id='id123')
+
+Eliminar registro:
+    db.CRUD('collection', 'delete', record_id='id123')
+
+
+7.2 Autenticacion
+-----------------
+
+Iniciar sesion:
+    session = auth.login(company_id, 'admin', 'password123')
+
+Cerrar sesion:
+    auth.logout()
+
+Verificar permisos:
+    if auth.has_permission('read_inventory'):
+        # Acceso concedido
+        pass
+
+Verificar rol:
+    if auth.has_role('gerente'):
+        # Acceso concedido
+        pass
+
+================================================================================
+                         8. INSTALACION
+================================================================================
+
+8.1 Requisitos Previos
+----------------------
+- Python 3.8 o superior
+
+8.2 Pasos de Instalacion
+------------------------
+
+1. Clonar o descargar el proyecto:
+   cd empresa_erp
+
+2. Verificar Python:
+   python --version
+
+3. Iniciar la aplicacion:
+   python main.py
+
+4. Inicializar datos de demostracion (opcional):
+   python main.py --init
+
+================================================================================
+                         9. CONFIGURACION
+================================================================================
+
+9.1 Configuracion de Correo
+----------------------------
+Editar src/modules/automation.py o usar el metodo email_config.configure().
+
+9.2 Estructura de Datos
+------------------------
+Los datos se almacenan en la carpeta data/ con el siguiente formato:
+- data/companies.json - Metadatos de empresas
+- data/company_{id}/ - Datos individuales por empresa
+
+9.3 Respaldo
+------------
+
+Crear respaldo:
+    from src.database import db
+    backup_path = db.backup_company(company_id)
+
+Restaurar desde respaldo:
+    db.restore_company(backup_path)
+
+
+================================================================================
+                              LICENCIA
+================================================================================
+
+Este proyecto es software libre bajo la licencia MIT.
+
+EnterpriseERP - Potenciando empresas con tecnologia Python.
+
+================================================================================

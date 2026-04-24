@@ -1,0 +1,24 @@
+[
+    {
+        "id": "374686d1-030",
+        "first_name": "jaime",
+        "last_name": "juarez",
+        "document_type": "DNI",
+        "document_number": "1 2061 0674",
+        "email": "jaimej@gmail.com",
+        "phone": "1111 1111",
+        "address": "",
+        "birth_date": "",
+        "gender": "",
+        "department": "recursos humanos",
+        "position": "head",
+        "hire_date": "2026-04-23",
+        "salary": 2000000.0,
+        "employee_type": "tiempo_completo",
+        "bank_account": "",
+        "emergency_contact": {},
+        "status": "activo",
+        "created_at": "2026-04-23T14:57:45.569768",
+        "updated_at": "2026-04-23T14:57:45.569768"
+    }
+]
