@@ -5,16 +5,16 @@ from typing import Optional
 
 class EmployeeBase(BaseModel):
     first_name: str = Field(..., min_length=2, max_length=50)
-    last_name: str = Field(..., min_lenght=2, max_length=50)
+    last_name: str = Field(..., min_length=2, max_length=50)
     email: EmailStr
     position: str
     department: str
     salary: float = Field(...,gt=0)
-    hire_date:date
+    hire_date: date
     
 
 class EmployeeCreate(EmployeeBase):
-    pass
+    hire_date: date =Field(default_factory=date.today)
 
 
 class EmployeeUpdate(EmployeeBase):
